@@ -6,6 +6,24 @@ function getHasilComp() {
   return "gajah";
 }
 
+function putar() {
+  let i = 0;
+  const arr = ["gajah", "semut", "orang"];
+  const imgComp = document.querySelector("#inputComputer");
+  const time = new Date().getTime();
+
+  const intervalId = setInterval(function () {
+    imgComp.setAttribute("src", "img/" + arr[i++] + ".png");
+
+    if (new Date().getTime() - time > 1000) {
+      clearInterval(intervalId); // <== Panggil dengan ID
+      return;
+    }
+
+    if (i == arr.length) i = 0;
+  }, 100);
+}
+
 function getHasilUser(user, comp) {
   if (user == comp) return "IMBANG";
   if (user == "semut") {
@@ -31,11 +49,14 @@ for (let i = 0; i < input.length; i++) {
     const hasilComputer = getHasilComp();
     const hasilUser = getHasilUser(value, hasilComputer);
 
-    const pilihanComp = document.querySelector(".pilihanComp");
-    pilihanComp.setAttribute("src", "img/" + hasilComputer + ".png");
-    console.log(hasilComputer);
+    putar();
 
-    const tampilHasil = document.querySelector("#hasil");
-    tampilHasil.innerHTML = hasilUser;
+    setTimeout(() => {
+      const pilihanComp = document.querySelector(".pilihanComp");
+      pilihanComp.setAttribute("src", "img/" + hasilComputer + ".png");
+
+      const tampilHasil = document.querySelector("#hasil");
+      tampilHasil.innerHTML = hasilUser;
+    }, 1000);
   });
 }
